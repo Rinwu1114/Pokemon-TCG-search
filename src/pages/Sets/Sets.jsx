@@ -5,12 +5,6 @@ import "./Sets.css";
 const Sets = () => {
   const [sets, setSets] = useState([]);
 
-  //   const totalPages = Math.ceil(sortedSeries.length / seriesPerPage);
-  //   const visibleSeries = sortedSeries.slice(
-  //     page * seriesPerPage,
-  //     (page + 1) * seriesPerPage
-  //   );
-
   useEffect(() => {
   async function fetchAllSets() {
     try {

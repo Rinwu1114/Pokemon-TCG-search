@@ -5,11 +5,13 @@ import Sets from './pages/Sets/Sets'
 import Cards from './pages/Cards/Cards'
 import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
+import { SearchProvider } from './components/Navbar/SearchContext'
 
 function App() {
 
   return (
     <>
+    <SearchProvider>
     <Navbar />
     <Routes>
       <Route path='/' element={ <Home /> } />
@@ -17,6 +19,7 @@ function App() {
       <Route path='/Cards' element={ <Cards /> } />
     </Routes>
     <Footer />
+    </SearchProvider>
     </>
   )
 }

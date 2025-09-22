@@ -1,13 +1,27 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import "./Navbar.css";
 import SearchIcon from "./SearchIcon";
 import logo from "../../assets/pikachu_sleeping.png"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { SearchContext } from "./SearchContext";
+import axios from "axios";
 
 const Navbar = () => {
   const [showSearchInput, setShowSearchInput] = useState(false);
   const searchInputRef = useRef(null);
+  
+  const { setSearchQuery } = useContext(SearchContext);
+  const navi = useNavigate()
 
+  const handleSearch = async (event) => {
+    const nameResults = event.target.value;
+    const nameResponse = await axios.get(`https://api.pokemontcg.io/v2/cards?q=name:${nameResults}`)
+    setSearchResults(nameResponse.data)
+    console.log(nameResponse.data)
+
+    Navigate("/Cards")
+  }
+ 
   const handleSearchClick = () => {
     setShowSearchInput(true);
     setTimeout(() => {
@@ -20,6 +34,16 @@ const Navbar = () => {
   const handleSearchBlur = () => {
     setShowSearchInput(false);
   };
+
+  function onSearchKeyDown(event) {
+    if (event.key === 'Enter'){
+        const query = event.target.value.trim()
+        if (query) {
+            setSearchQuery(query)
+            navi("/Cards")
+        }
+    }
+  }
 
   return (
     <nav>
@@ -43,6 +67,7 @@ const Navbar = () => {
               onBlur={handleSearchBlur}
               placeholder="Search for cards"
               style={{ pointerEvents: showSearchInput ? "auto" : "none" }}
+              onKeyDown={onSearchKeyDown}
             />
           </div>
         </div>
