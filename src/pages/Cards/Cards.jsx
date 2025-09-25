@@ -1,29 +1,35 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SearchContext } from "../../components/Navbar/SearchContext";
 import axios from "axios";
 import "./Cards.css";
 import eeveeSit from "../../assets/Eevee_sitting.png";
 import psyConfused from "../../assets/pngegg.png";
 import pokemon from "pokemontcgsdk";
+pokemon.configure({ apiKey: "a49f45de-99d5-4e2a-b2e4-913f512433cf" });
 
 const Cards = () => {
   const { searchQuery, searchResults, setSearchResults } =
     useContext(SearchContext);
-  pokemon.configure({ apiKey: "a49f45de-99d5-4e2a-b2e4-913f512433cf" });
+
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    if (searchQuery) {
+    if (searchQuery){
+        setIsLoading(true)
       pokemon.card
         .where({
           q: `name:${searchQuery}*`,
-          pageSize: 50,
+          pageSize: 6,
           select: "id,name,images,rarity,set",
           orderBy: "-set.gitreleaseDate",
         })
         .then((res) => {
           setSearchResults(res.data);
         })
-        .catch((err) => console.error("Error fetching cards:", err));
+        .catch ((err) => {
+            console.log(err)
+        })
+        .finally(() => setIsLoading(false))
     }
   }, [searchQuery, setSearchResults]);
 
@@ -35,11 +41,33 @@ const Cards = () => {
       </div>
     );
   }
+  if (isLoading) {
+    return(
+        <div className="cards__container--loading">
+           { Array.from({ length: 6 }).map((_, idx) => (
+        <div className="cards__loading" key={idx}>
+          <div className="card__img--loading"></div>
+          <div className="card__info--loading">
+            <ul className="info__list--loading">
+                <li className="info__list--details--loading"> </li>
+                <li className="info__list--details--loading"> </li>
+                <li className="info__list--details--loading"> </li>
+                <li className="info__list--details--loading"> </li>
+            </ul>
+          </div>
+        </div>
+        ))}
+        </div> 
+    )
+  }
+  
   if (!searchResults || searchResults.length === 0) {
     return (
       <div className="cards__none">
-        <h1 className="none__heading">No cards found for "{searchQuery}"</h1>
-        <img src={psyConfused} alt="" />
+        <div className="card__none--loaded">
+            <h1 className="none__heading">No cards found for "{searchQuery}"</h1>
+            <img src={psyConfused} alt="" />
+        </div>
       </div>
     );
   }
@@ -47,7 +75,7 @@ const Cards = () => {
   return (
     <>
       <h1 className="title">Search Results for: {searchQuery}</h1>
-      <div className="cards__container">
+      <div className="cards__container">  
         {searchResults.slice(0, 6).map((card) => (
           <div className="cards" key={card.id}>
             {card.images && (
