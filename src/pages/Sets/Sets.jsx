@@ -14,7 +14,7 @@ const Sets = () => {
             return;
         }
       const response = await axios.get(
-        `https://api.pokemontcg.io/v2/sets?pageSize=250&orderBy=-releaseDate`
+        `/sets?pageSize=250&orderBy=-releaseDate`
       );
       if (response?.data?.data) {
         setSets(response.data.data);

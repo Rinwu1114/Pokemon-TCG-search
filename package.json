@@ -2,6 +2,7 @@
   "name": "pokemon-tcg-search",
   "private": true,
   "version": "0.0.0",
+  "proxy": "https://api.pokemontcg.io/v2",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,6 +12,7 @@
   },
   "dependencies": {
     "axios": "^1.12.2",
+    "pokemontcgsdk": "^2.0.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.8.2"

@@ -25,7 +25,12 @@
     justify-content: center;
     height: auto;
     margin-bottom: 25px;
-    cursor : pointer;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.sets__img:hover{
+    scale: 1.15;
 }
 
 .sets__info{

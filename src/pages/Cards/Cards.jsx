@@ -3,18 +3,25 @@ import { SearchContext } from "../../components/Navbar/SearchContext";
 import axios from "axios";
 import "./Cards.css";
 import eeveeSit from "../../assets/Eevee_sitting.png";
-import psyConfused from "../../assets/pngegg.png"
+import psyConfused from "../../assets/pngegg.png";
+import pokemon from "pokemontcgsdk";
 
 const Cards = () => {
   const { searchQuery, searchResults, setSearchResults } =
     useContext(SearchContext);
+  pokemon.configure({ apiKey: "a49f45de-99d5-4e2a-b2e4-913f512433cf" });
 
   useEffect(() => {
     if (searchQuery) {
-      axios
-        .get(`https://api.pokemontcg.io/v2/cards?q=name:${searchQuery}`)
+      pokemon.card
+        .where({
+          q: `name:${searchQuery}*`,
+          pageSize: 50,
+          select: "id,name,images,rarity,set",
+          orderBy: "-set.gitreleaseDate",
+        })
         .then((res) => {
-          setSearchResults(res.data.data);
+          setSearchResults(res.data);
         })
         .catch((err) => console.error("Error fetching cards:", err));
     }
@@ -24,17 +31,18 @@ const Cards = () => {
     return (
       <div className="cards__start">
         <h1 className="start__heading">Search a card name to get started</h1>
-        <img src={eeveeSit} alt="Eevee sitting" className="start__img"/>
+        <img src={eeveeSit} alt="Eevee sitting" className="start__img" />
       </div>
     );
   }
-  if (!searchResults || searchResults.length === 0 ) {
+  if (!searchResults || searchResults.length === 0) {
     return (
-    <div className="cards__none">
+      <div className="cards__none">
         <h1 className="none__heading">No cards found for "{searchQuery}"</h1>
         <img src={psyConfused} alt="" />
-        </div>
-  )}
+      </div>
+    );
+  }
   console.log("search results:", searchResults);
   return (
     <>
@@ -52,9 +60,9 @@ const Cards = () => {
             <div className="card__info">
               <ul className="info__list">
                 <li>Name: {card.name}</li>
-                <li>Rarity: {card.rarity || "Not on File" }</li>
-                <li>Series: {card.set.series || "Not on File" }</li>
-                <li>Set: {card.set.name || "Not on File" }</li>
+                <li>Rarity: {card.rarity || "Not on File"}</li>
+                <li>Series: {card.set.series || "Not on File"}</li>
+                <li>Set: {card.set.name || "Not on File"}</li>
               </ul>
             </div>
           </div>

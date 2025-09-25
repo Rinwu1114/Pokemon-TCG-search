@@ -15,7 +15,7 @@ const Navbar = () => {
 
   const handleSearch = async (event) => {
     const nameResults = event.target.value;
-    const nameResponse = await axios.get(`https://api.pokemontcg.io/v2/cards?q=name:${nameResults}`)
+    const nameResponse = await axios.get(`/cards?q=name:${nameResults}`)
     setSearchResults(nameResponse.data)
     console.log(nameResponse.data)
 
