@@ -103,7 +103,7 @@ li{
     height: 200px;
     background: linear-gradient(90deg, #ccc 25%, #eee 50%, #ccc 75%);
     background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
+    animation: shimmer 1s infinite;
 }
 
 .card__info--loading{
@@ -122,7 +122,7 @@ li{
     margin-top: 10px;
     background: linear-gradient(90deg, #ccc 25%, #eee 50%, #ccc 75%);
     background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
+    animation: shimmer 1s infinite;
 }
 
 

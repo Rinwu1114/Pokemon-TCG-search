@@ -1,24 +1,24 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import "./Sets.css";
+import pokemon from "pokemontcgsdk";
+pokemon.configure({ apiKey: "a49f45de-99d5-4e2a-b2e4-913f512433cf" });
 
 const Sets = () => {
   const [sets, setSets] = useState([]);
 
   useEffect(() => {
-  async function fetchAllSets() {
+  function fetchAllSets() {
     try {
         const cached = localStorage.getItem('pokemonSets');
         if (cached) {
             setSets(JSON.parse(cached));
             return;
         }
-      const response = await axios.get(
-        `/sets?pageSize=250&orderBy=-releaseDate`
-      );
-      if (response?.data?.data) {
-        setSets(response.data.data);
-        localStorage.setItem('pokemonSets', JSON.stringify(response.data.data)); // Cache the data
+      const response = pokemon.set.all();
+      if (response && response.length) {
+        setSets(response);
+        localStorage.setItem('pokemonSets', JSON.stringify(response)); // Cache the data
       }
     } catch (err) {
       console.error("API error:", err);
@@ -26,12 +26,13 @@ const Sets = () => {
     }
   }
   fetchAllSets();
+  console.log(fetchAllSets)
 }, []);
 
   // Group sets by series
   const setsBySeries = useMemo(() => {
     return sets.reduce((groups, set) => {
-      const series = set.series;
+      const series = set.series || "Other";
       if (!groups[series]) groups[series] = [];
       groups[series].push(set);
       return groups;
@@ -45,10 +46,10 @@ const Sets = () => {
         if (seriesA === "Other") return 1; // Always move "Other" down
         if (seriesB === "Other") return -1; // Always move "Other" up
         const newestA = Math.max(
-          ...setsA.map((set) => new Date(set.releaseDate))
+          ...setsA.map((set) => new Date(set.releaseDate).getTime())
         );
         const newestB = Math.max(
-          ...setsB.map((set) => new Date(set.releaseDate))
+          ...setsB.map((set) => new Date(set.releaseDate).getTime())
         );
         return newestB - newestA;
       }

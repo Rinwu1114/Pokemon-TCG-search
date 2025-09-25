@@ -21,7 +21,7 @@ const Cards = () => {
           q: `name:${searchQuery}*`,
           pageSize: 6,
           select: "id,name,images,rarity,set",
-          orderBy: "-set.gitreleaseDate",
+          orderBy: "-set.releaseDate"
         })
         .then((res) => {
           setSearchResults(res.data);
@@ -31,7 +31,7 @@ const Cards = () => {
         })
         .finally(() => setIsLoading(false))
     }
-  }, [searchQuery, setSearchResults]);
+  }, [searchQuery]);
 
   if (!searchQuery) {
     return (
@@ -60,7 +60,7 @@ const Cards = () => {
         </div> 
     )
   }
-  
+
   if (!searchResults || searchResults.length === 0) {
     return (
       <div className="cards__none">
@@ -83,6 +83,7 @@ const Cards = () => {
                 src={card.images.small}
                 alt={card.name}
                 className="card__img"
+                loading="lazy"
               />
             )}
             <div className="card__info">
