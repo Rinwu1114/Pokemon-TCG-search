@@ -1,0 +1,31 @@
+.more__cards{
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    z-index: 1;
+}
+
+.card__title{
+    padding-left: 20px;
+}
+
+.cardlist{
+    display: flex;
+    padding: 20px 0 0 20px;
+    overflow-x: auto;
+    overflow-y: visible;
+    scrollbar-width: none;
+    width: 100%;
+    max-width: 100vw;
+}
+
+.card__img--row{
+    width: 180px;
+    margin: 10px;
+    transition: all 0.1s ease;
+}
+
+.card__img--row:hover{
+    scale: 1.1;
+    cursor: pointer;
+}

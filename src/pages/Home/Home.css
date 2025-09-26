@@ -1,11 +1,22 @@
 .eevee{
-    position: fixed;
-    top: 15%; /* adjust as needed */
-    left: 100vw;
-    width: 120px; /* adjust size as needed */
-    z-index: 10;
-    animation: slide-eevee 6s linear infinite;
+  position: relative; 
+  width: 100vw;         
+  height: 40vh;        
+  overflow: hidden;  
+  z-index: 1;   
 }
+
+.eevee__gif{
+  position: absolute;
+  margin-top: 100px;
+  top: 0;
+  left: 100%;           
+  width: 200px;         
+  animation: slide-eevee 6s linear infinite;
+  z-index: 1;
+}
+
+
 @keyframes slide-eevee {
     0% {
         left: 100vw;
