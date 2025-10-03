@@ -11,8 +11,8 @@ const Home = () => {
       </div>
       <div className="more__cards">
         <CardRows title={"EX Cards"} subTypes={"EX"}></CardRows>
-        <CardRows title={"Mega Evo"} subTypes={"mega"}></CardRows>
-        <CardRows title={"Item"} subTypes={"trainer"}></CardRows>
+        {/* <CardRows title={"Mega Evo"} subTypes={"mega"}></CardRows>
+        <CardRows title={"Item"} subTypes={"trainer"}></CardRows> */}
       </div>
     </div>
   );

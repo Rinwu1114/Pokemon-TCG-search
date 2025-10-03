@@ -6,11 +6,13 @@ import Cards from './pages/Cards/Cards'
 import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
 import { SearchProvider } from './components/Navbar/SearchContext'
+import { CardsProvider } from './pages/Cards/CardsContext'
 
 function App() {
 
   return (
     <>
+    <CardsProvider>
     <SearchProvider>
     <Navbar />
     <Routes>
@@ -20,6 +22,7 @@ function App() {
     </Routes>
     <Footer />
     </SearchProvider>
+    </CardsProvider>
     </>
   )
 }

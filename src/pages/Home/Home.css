@@ -1,7 +1,7 @@
 .eevee{
   position: relative; 
   width: 100vw;         
-  height: 40vh;        
+  height: 50vh;        
   overflow: hidden;  
   z-index: 1;   
 }
