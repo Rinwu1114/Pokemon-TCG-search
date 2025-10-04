@@ -93,9 +93,9 @@ setTimeout(() => {
   console.log("Rendering cards in order:", filteredCards.map(c => c.setDetails.releaseDate));
   return (
     <>
-      <h1 className="title">Search Results for: {searchQuery}</h1>
+      <h1 className="title">Search results for: {searchQuery}</h1>
       <div className="cards__container">
-        {filteredCards.slice(0, 6).map((card, idx) => (
+        {filteredCards.map((card, idx) => (
           <div className="cards" key={`${card.id}-${idx}`}>
             {card.images && (
               <img

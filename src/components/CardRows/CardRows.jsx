@@ -28,25 +28,7 @@ const CardRows = ({ title, cardName = "", subTypes = "" }) => {
 
   useEffect(() => {
     const fetchCards = async () => {
-      try {
-        const cacheKey = `cards_${subTypes || "all"}_${cardName || "all"}`;
-        const cached = localStorage.getItem(cacheKey);
-
-        if (cached) {
-          try {
-            const parsed = JSON.parse(cached);
-            if (Array.isArray(parsed)) {
-              setApiData(parsed);
-              return;
-            } else {
-              console.warn("Cached data is not an array, clearing cache");
-              localStorage.removeItem(cacheKey);
-            }
-          } catch (e) {
-            console.warn("Invalid cached JSON, clearing cache");
-            localStorage.removeItem(cacheKey);
-          }
-        }
+     
 
         const res = await axios.get("/allCards.json");
         const allCards = Array.isArray(res.data) ? res.data : res.data.data;
@@ -67,16 +49,12 @@ const CardRows = ({ title, cardName = "", subTypes = "" }) => {
           }
           return match;
         });
-
         setApiData(filtered);
-        localStorage.setItem(cacheKey, JSON.stringify(filtered));
-      } catch (err) {
-        console.error("API error:", err);
-        setApiData([]);
-      }
+       
     };
 
     fetchCards();
+    console.log("Fetched cards:", fetchCards());
   }, [cardName, subTypes]);
 
 
